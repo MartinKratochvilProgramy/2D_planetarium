@@ -21,7 +21,7 @@ class Scene:
             orbit=CircularOrbit(
                 center=(0, 0), 
                 start_pos=(0, 80), 
-                angular_velocity=0)
+                angular_velocity=5)
                 )
             )
 

@@ -14,7 +14,12 @@ class Body:
 
     def render(self):
         self.update()
-        pg.draw.circle(self.app.screen, self.color, center=(self.orbit.x + self.app.view.x_offset, self.orbit.y + self.app.view.y_offset), radius=self.radius)
+        pg.draw.circle(
+            self.app.screen, 
+            self.color, 
+            center = (self.orbit.x + self.app.view.x_offset, self.orbit.y + self.app.view.y_offset), 
+            radius = max(self.radius * self.app.view.zoom, 1)   # planet size could be less than 0
+        )
 
 
 class CircularOrbit:

@@ -10,6 +10,8 @@ class GraphicsEngine:
         self.HEIGHT = HEIGHT
         self.screen = pg.display.set_mode((self.WIDTH, self.HEIGHT))
 
+        self.events = pg.event.get()
+
         self.clock = pg.time.Clock()
         self.time = 0
         self.delta_time = 0
@@ -18,7 +20,8 @@ class GraphicsEngine:
         self.view = View(self)
 
     def check_events(self):
-        for event in pg.event.get():
+        self.events = pg.event.get()
+        for event in self.events:
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                 self.scene_renderer.destroy()
                 pg.quit()
@@ -32,7 +35,14 @@ class GraphicsEngine:
         pg.display.flip()
 
     def get_time(self):
-        self.time = pg.time.get_ticks() *0.001
+        # update time only when camera is not camera_action
+        if not self.view.camera_action:
+            self.delta_time = self.clock.tick(60)
+        else:
+            self.clock.tick(60)
+            self.delta_time = 0
+        
+        self.time += self.delta_time
 
     def run(self):
         while True:
@@ -40,7 +50,6 @@ class GraphicsEngine:
             self.check_events()
             self.view.update()
             self.render()
-            self.delta_time = self.clock.tick(60)
 
 if __name__ == '__main__':
     app = GraphicsEngine()
