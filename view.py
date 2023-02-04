@@ -7,18 +7,20 @@ class View:
         self.app = app
         self.x_offset = self.app.WIDTH / 2
         self.y_offset = self.app.HEIGHT / 2
+        self.mouse_x, self.mouse_y = pg.mouse.get_pos()
 
     def update(self):
         self.move()
 
     def move(self):
-        velocity = PAN_SPEED * self.app.delta_time
-        keys = pg.key.get_pressed()
-        if keys[pg.K_w]:
-            self.y_offset += velocity
-        if keys[pg.K_s]:
-            self.y_offset -= velocity
-        if keys[pg.K_a]:
-            self.x_offset += velocity
-        if keys[pg.K_d]:
-            self.x_offset -= velocity
+        # keys = pg.key.get_pressed()
+
+        new_mouse_x, new_mouse_y = pg.mouse.get_pos()
+        mouse_dx = new_mouse_x - self.mouse_x
+        mouse_dy = new_mouse_y - self.mouse_y
+        self.mouse_x, self.mouse_y = new_mouse_x, new_mouse_y
+
+        LMB, MMB, RMB = pg.mouse.get_pressed()
+        if (MMB):
+            self.x_offset += mouse_dx
+            self.y_offset += mouse_dy
