@@ -1,6 +1,7 @@
 import pygame as pg
 import sys
 from scene import Scene
+from view import View
 
 class GraphicsEngine:
     def __init__(self, WIDTH=1200, HEIGHT=650) -> None:
@@ -14,6 +15,7 @@ class GraphicsEngine:
         self.delta_time = 0
         
         self.scene = Scene(self)
+        self.view = View(self)
 
     def check_events(self):
         for event in pg.event.get():
@@ -36,6 +38,7 @@ class GraphicsEngine:
         while True:
             self.get_time()
             self.check_events()
+            self.view.update()
             self.render()
             self.delta_time = self.clock.tick(60)
 

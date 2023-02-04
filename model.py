@@ -14,7 +14,8 @@ class Body:
 
     def render(self):
         self.update()
-        pg.draw.circle(self.app.screen, self.color, center=(self.orbit.x, self.orbit.y), radius=self.radius)
+        pg.draw.circle(self.app.screen, self.color, center=(self.orbit.x + self.app.view.x_offset, self.orbit.y + self.app.view.y_offset), radius=self.radius)
+
 
 class CircularOrbit:
     def __init__(self, center, start_pos, angular_velocity):
@@ -27,8 +28,6 @@ class CircularOrbit:
         self.x = start_pos[0]
         self.y = start_pos[1]
         self.fi = safe_atan(dy, dx)
-
-        print(self.x, self.y, self.fi, self.radius)
 
     def update(self, dt):
         self.fi += self.angular_velocity * dt / 1000        # from ms to s
