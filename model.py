@@ -17,12 +17,12 @@ class Body:
         pg.draw.circle(
             self.app.screen, 
             self.color, 
-            center = (self.orbit.x + self.app.view.x_offset, self.orbit.y + self.app.view.y_offset), 
-            radius = max(self.radius * self.app.view.zoom, 1)   # planet size could be less than 0
+            center = (self.app.view.world_to_screen_transform(self.orbit.x, self.orbit.y)),
+            radius = max(self.radius / self.app.view.zoom, 1)   # planet size could be less than 0
         )
 
 
-class CircularOrbit:
+class Orbit:
     def __init__(self, center, start_pos, angular_velocity):
         dx = start_pos[0] - center[0]
         dy = start_pos[1] - center[1]
@@ -34,7 +34,15 @@ class CircularOrbit:
         self.y = start_pos[1]
         self.fi = safe_atan(dy, dx)
 
+    def update(self):
+        ...
+
+
+class CircularOrbit(Orbit):
+    def __init__(self, center, start_pos, angular_velocity):
+        super().__init__(center, start_pos, angular_velocity)
+
     def update(self, dt):
-        self.fi += self.angular_velocity * dt / 1000        # from ms to s
+        self.fi += self.angular_velocity * dt / 1000 % 360       # from ms to s, floor to 360
         self.x = self.center[0] + self.radius * np.cos(self.fi)
         self.y = self.center[1] - self.radius * np.sin(self.fi)

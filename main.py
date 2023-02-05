@@ -23,7 +23,6 @@ class GraphicsEngine:
         self.events = pg.event.get()
         for event in self.events:
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
-                self.scene_renderer.destroy()
                 pg.quit()
                 sys.exit()
 
