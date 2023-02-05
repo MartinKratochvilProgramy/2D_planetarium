@@ -19,8 +19,9 @@ class Scene:
             radius=20, 
             color=WHITE, 
             orbit=CircularOrbit(
+                app,
                 center=(0, 0), 
-                start_pos=(100, 0), 
+                start_pos=(150, 0), 
                 angular_velocity=0)
                 )
             )

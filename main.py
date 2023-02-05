@@ -6,6 +6,7 @@ from view import View
 class GraphicsEngine:
     def __init__(self, WIDTH=1200, HEIGHT=650) -> None:
         pg.init()
+        self.FPS = 60
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
         self.screen = pg.display.set_mode((self.WIDTH, self.HEIGHT))
@@ -36,9 +37,9 @@ class GraphicsEngine:
     def get_time(self):
         # update time only when camera is not camera_action
         if not self.view.camera_action:
-            self.delta_time = self.clock.tick(60)
+            self.delta_time = self.clock.tick(self.FPS)
         else:
-            self.clock.tick(60)
+            self.clock.tick(self.FPS)
             self.delta_time = 0
         
         self.time += self.delta_time
