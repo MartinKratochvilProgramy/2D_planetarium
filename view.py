@@ -44,9 +44,9 @@ class View:
                 self.camera_action = True
                 x_prev, y_prev = self.screen_to_world_transform(self.mouse_x, self.mouse_y)
                 if (event.y > 0):
-                    self.zoom += ZOOM_SPEED
+                    self.zoom *= 1 + ZOOM_SPEED
                 if (event.y < 0):
-                    self.zoom -= ZOOM_SPEED
+                    self.zoom *= 1 - ZOOM_SPEED
 
                 x_post, y_post = self.screen_to_world_transform(self.mouse_x, self.mouse_y)
 
