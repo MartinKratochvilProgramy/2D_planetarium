@@ -21,10 +21,26 @@ class Scene:
             orbit=CircularOrbit(
                 app,
                 center=(0, 0), 
-                start_pos=(150, 0), 
+                start_pos=(-150, 0), 
                 angular_velocity=0)
                 )
             )
+
+        add(Body(
+            app, 
+            radius=20, 
+            color=WHITE, 
+            orbit=ElipticalOrbit(
+                app,
+                center=(0, 0),
+                start_fi=0,
+                start_radius=150,
+                epsilon=0.5,
+                p = 150,
+                angular_velocity=1
+                )
+            )
+        )
 
     def render(self):
         for obj in self.objects:
