@@ -31,6 +31,9 @@ class GraphicsEngine:
         # clear framebuffer
         self.screen.fill((20, 41, 46))
         self.scene.render()
+        image = pg.Surface([640,480], pg.SRCALPHA, 32)
+        image.fill((255, 255, 255))
+        image = image.convert_alpha()
         # swap buffers
         pg.display.flip()
 

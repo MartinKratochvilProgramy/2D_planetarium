@@ -52,7 +52,7 @@ class ElipticalOrbit():
         width = r_min + r_max
         height = 2*b
 
-        pg.draw.ellipse(
+        ellipse = pg.draw.ellipse(
             self.app.screen, 
             color=WHITE, 
             rect=(left, top, width, height),
