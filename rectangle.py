@@ -12,7 +12,7 @@ class Rectangle():
             on_key_press = self.on_key_press
         )
         # super(Rectangle, self).__init__(app.WIDTH, app.HEIGHT, *args, **kwargs)
-        self.blue_sequare = shapes.Rectangle(200, 200, 100, 20, color=(100, 100, 100), batch=self.app.batch)
+        self.blue_square = shapes.Rectangle(200, 200, 100, 20, color=(100, 100, 100), batch=self.app.batch)
 
     def on_key_press(self, symbol, modifiers):
         print("key")

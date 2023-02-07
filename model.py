@@ -1,7 +1,21 @@
-import pygame as pg
+import pyglet
+from pyglet import shapes
+from pyglet.window import key
 import numpy as np
 from utils.safe_atan import safe_atan
 from colors import WHITE
+
+class Rect():
+    def __init__(self, app, *args, **kwargs) -> None:
+        self.app = app
+        self.x = 200
+        self.y = 200
+        self.blue_square = shapes.Rectangle(self.x, self.y, 100, 20, color=(100, 100, 100), batch=self.app.batch)
+
+    def update(self):
+        self.blue_square = shapes.Rectangle(self.x, self.y, 100, 20, color=(100, 100, 100), batch=self.app.batch)
+        self.x += 1
+
 
 class Body:
     def __init__(self, app, radius, color, orbit):
