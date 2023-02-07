@@ -10,7 +10,7 @@ from clock import Clock
 class GraphicsEngine(pyglet.window.Window):
     def __init__(self, WIDTH=1200, HEIGHT=650, *args, **kwargs) -> None:
 
-        self.FPS = 60
+        self.FPS = 20
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
         
@@ -23,9 +23,8 @@ class GraphicsEngine(pyglet.window.Window):
         self.batch = pyglet.graphics.Batch()
 
         self.clock = Clock()
-       
-        self.scene = Scene(self)
         self.camera = Camera(self)
+        self.scene = Scene(self)
 
         pyglet.clock.schedule_interval(self.update, 1.0 / self.FPS)
 
@@ -36,7 +35,6 @@ class GraphicsEngine(pyglet.window.Window):
     def update(self, dt):
         if not self.camera.camera_action:
             self.clock.update_time()
-            print(self.clock.dt)
             for obj in self.scene.objects:
                 obj.update()
             # print(self.clock.elapsed_time)
