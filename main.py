@@ -1,59 +1,58 @@
-import pygame as pg
-import sys
+import pyglet
+from pyglet.window import key
 from scene import Scene
-from view import View
+from camera import Camera
+from clock import Clock
+# from rectangle import Rectangle
 
-class GraphicsEngine:
-    def __init__(self, WIDTH=1200, HEIGHT=650) -> None:
-        pg.init()
+# https://github.dev/earthastronaut/pyglet_projects/tree/master/projects/asteroids
+
+class GraphicsEngine(pyglet.window.Window):
+    def __init__(self, WIDTH=1200, HEIGHT=650, *args, **kwargs) -> None:
+
         self.FPS = 60
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
-        self.screen = pg.display.set_mode((self.WIDTH, self.HEIGHT))
-
-        self.events = pg.event.get()
-
-        self.clock = pg.time.Clock()
-        self.time = 0
-        self.delta_time = 0
         
+        self.window = pyglet.window.Window(WIDTH, HEIGHT, caption="A python is a snake")
+        self.window.push_handlers(
+            on_key_press=self.on_key_press,
+            on_draw=self.on_draw,
+        )
+
+        self.batch = pyglet.graphics.Batch()
+
+        self.clock = Clock()
+       
         self.scene = Scene(self)
-        self.view = View(self)
+        self.camera = Camera(self)
 
-    def check_events(self):
-        self.events = pg.event.get()
-        for event in self.events:
-            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
-                pg.quit()
-                sys.exit()
+        pyglet.clock.schedule_interval(self.update, 1.0 / self.FPS)
 
-    def render(self):
-        # clear framebuffer
-        self.screen.fill((20, 41, 46))
-        self.scene.render()
-        image = pg.Surface([640,480], pg.SRCALPHA, 32)
-        image.fill((255, 255, 255))
-        image = image.convert_alpha()
-        # swap buffers
-        pg.display.flip()
+    def on_key_press(self, symbol, modifiers):
+        if symbol == key.ESCAPE:
+            pyglet.app.exit()
 
-    def get_time(self):
-        # update time only when camera is not camera_action
-        if not self.view.camera_action:
-            self.delta_time = self.clock.tick(self.FPS)
-        else:
-            self.clock.tick(self.FPS)
-            self.delta_time = 0
+    # def get_time(self):
+    #     # update time only when camera is not camera_action
+    #     if not self.view.camera_action:
+    #         self.delta_time = self.clock.tick(self.FPS)
+    #     else:
+    #         self.clock.tick(self.FPS)
+    #         self.delta_time = 0
         
-        self.time += self.delta_time
+    #     self.time += self.delta_time
 
-    def run(self):
-        while True:
-            self.get_time()
-            self.check_events()
-            self.view.update()
-            self.render()
+    def update(self, dt):
+        self.clock.tick()
+        # if not self.view.camera_action:
+        #     self.clock.update()
+
+    def on_draw(self):
+        self.clear()
+        self.batch.draw()
+
 
 if __name__ == '__main__':
     app = GraphicsEngine()
-    app.run()
+    pyglet.app.run()
