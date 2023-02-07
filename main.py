@@ -3,7 +3,6 @@ from pyglet.window import key
 from scene import Scene
 from camera import Camera
 from clock import Clock
-# from rectangle import Rectangle
 
 # https://github.dev/earthastronaut/pyglet_projects/tree/master/projects/asteroids
 
@@ -33,20 +32,11 @@ class GraphicsEngine(pyglet.window.Window):
         if symbol == key.ESCAPE:
             pyglet.app.exit()
 
-    # def get_time(self):
-    #     # update time only when camera is not camera_action
-    #     if not self.view.camera_action:
-    #         self.delta_time = self.clock.tick(self.FPS)
-    #     else:
-    #         self.clock.tick(self.FPS)
-    #         self.delta_time = 0
-        
-    #     self.time += self.delta_time
-
     def update(self, dt):
-        self.clock.tick()
-        # if not self.view.camera_action:
-        #     self.clock.update()
+        if not self.camera.camera_action:
+            self.clock.update_time()
+        else:
+            self.clock.tick()
 
     def on_draw(self):
         self.clear()

@@ -16,5 +16,4 @@ class Clock:
         dt = current_time - self.time
         
         self.elapsed_time += dt
-        # print(self.elapsed_time)
         self.time = current_time
