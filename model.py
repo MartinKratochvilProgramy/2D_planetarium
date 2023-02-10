@@ -53,17 +53,19 @@ class CircularOrbit():
 
 
 class ElipticalOrbit():
-    def __init__(self, app, center, start_fi, start_radius, epsilon, p, angular_velocity):
+    def __init__(self, app, center, start_fi, epsilon, p, angular_velocity, color):
         self.app = app
+        self.center = center
         self.fi = start_fi
-        self.radius = p / (1 + epsilon)
+        self.epsilon = epsilon
         self.epsilon = epsilon
         self.p = p
+        self.radius = p / (1 + epsilon)
         self.angular_velocity = angular_velocity
-        self.center = center
+        self.color = color
         
     def update(self, dt):
-        self.fi += self.angular_velocity * dt / 1000 % 360       # from ms to s, floor to 360
+        self.fi += np.arctan((2 * self.angular_velocity * dt) / self.radius**2) % 360       # from ms to s, floor to 360
         self.radius = self.p / (1 + self.epsilon * np.cos(self.fi))
         self.x = self.center[0] + self.radius * np.cos(self.fi)
         self.y = self.center[1] - self.radius * np.sin(self.fi)
@@ -82,7 +84,14 @@ class ElipticalOrbit():
 
         pg.draw.ellipse(
             self.app.screen, 
-            color=WHITE, 
+            color=self.color, 
             rect=(left, top, width, height),
             width=1
+        )
+
+        pg.draw.circle(
+            self.app.screen,
+            color=self.color,
+            center = self.app.camera.world_to_screen_transform(self.center[0], self.center[1]),
+            radius = 1,
         )

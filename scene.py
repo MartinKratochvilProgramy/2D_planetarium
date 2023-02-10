@@ -34,10 +34,10 @@ class Scene:
                 app,
                 center=(0, 0),
                 start_fi=0,
-                start_radius=150,
-                epsilon=0.5,
+                epsilon=0.9,
                 p = 150,
-                angular_velocity=1
+                angular_velocity=100,
+                color=WHITE
                 )
             )
         )
