@@ -32,17 +32,18 @@ class GraphicsEngine:
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                 pg.quit()
                 sys.exit()
-            elif event.type == pg.KEYDOWN:
-                if event.key == pg.K_d:
-                    self.clock.increase_time_scale() 
-                if event.key == pg.K_a:
-                    self.clock.decrease_time_scale() 
+
+            keys = pg.key.get_pressed()  #checking pressed keys
+            if keys[pg.K_d]:
+                self.clock.increase_time_scale() 
+            if keys[pg.K_a]:
+                self.clock.decrease_time_scale() 
 
     def get_time(self):
         # update time only when camera is not camera_action
         delta_t = pg.time.Clock().tick(self.FPS) * self.clock.time_scale         # to seconds
         if not self.camera.camera_action:
-            self.clock.dt = delta_t
+            self.clock.update_dt(delta_t / 1000)
             self.clock.update_time()
         else:
             # don't update on camera action

@@ -40,7 +40,6 @@ class CircularOrbit():
     def update(self, dt):
         self.fi += self.angular_velocity * dt      # from ms to s, floor to 360
         self.fi = self.fi % 360
-        print(self.fi)
         self.x = self.center[0] + self.radius * np.cos(self.fi)
         self.y = self.center[1] - self.radius * np.sin(self.fi)
 
@@ -67,7 +66,11 @@ class ElipticalOrbit():
         self.color = color
         
     def update(self, dt):
-        self.fi += np.arctan((2 * self.angular_velocity * dt) / self.radius**2) % 360       # from ms to s, floor to 360
+        v = np.sqrt(200 * (1/self.radius + self.epsilon))
+        dfi = np.arcsin(v * self.app.clock.dt / self.radius)
+        self.fi += dfi        # from ms to s, floor to 360
+        print(dfi, self.angular_velocity, self.app.clock.dt, self.radius)
+        self.fi %= 360
         self.radius = self.p / (1 + self.epsilon * np.cos(self.fi))
         self.x = self.center[0] + self.radius * np.cos(self.fi)
         self.y = self.center[1] - self.radius * np.sin(self.fi)
