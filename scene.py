@@ -1,9 +1,11 @@
 from model import *
 from colors import WHITE
+from settings import TIME_SCALE_SPEED
 
 class Scene:
-    def __init__(self, app):
+    def __init__(self, app, time_scale=1):
         self.app = app
+        self.time_scale = time_scale
         self.objects = []
         self.load()
 
@@ -42,6 +44,14 @@ class Scene:
             )
         )
 
+    def increase_time_scale(self):
+        self.time_scale *= 1 + TIME_SCALE_SPEED
+    
+    def decrease_time_scale(self):
+        self.time_scale *= 1 - TIME_SCALE_SPEED
+    
     def render(self):
         for obj in self.objects:
             obj.render()
+
+    

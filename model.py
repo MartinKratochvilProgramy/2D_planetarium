@@ -11,7 +11,7 @@ class Body:
         self.orbit = orbit
 
     def update(self):
-        self.orbit.update(self.app.delta_time)
+        self.orbit.update(self.app.clock.dt)
 
     def render(self):
         self.update()

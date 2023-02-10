@@ -1,7 +1,5 @@
 import pygame as pg
-
-PAN_SPEED = 0.1
-ZOOM_SPEED = 0.05
+from settings import ZOOM_SPEED
 
 class Camera:
     def __init__(self, app):
