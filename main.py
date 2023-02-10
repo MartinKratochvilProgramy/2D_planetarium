@@ -1,7 +1,7 @@
 import pygame as pg
 import sys
 from scene import Scene
-from view import View
+from camera import Camera
 
 class GraphicsEngine:
     def __init__(self, WIDTH=1200, HEIGHT=650) -> None:
@@ -18,7 +18,7 @@ class GraphicsEngine:
         self.delta_time = 0
         
         self.scene = Scene(self)
-        self.view = View(self)
+        self.camera = Camera(self)
 
     def check_events(self):
         self.events = pg.event.get()
@@ -39,7 +39,7 @@ class GraphicsEngine:
 
     def get_time(self):
         # update time only when camera is not camera_action
-        if not self.view.camera_action:
+        if not self.camera.camera_action:
             self.delta_time = self.clock.tick(self.FPS)
         else:
             self.clock.tick(self.FPS)
@@ -51,7 +51,7 @@ class GraphicsEngine:
         while True:
             self.get_time()
             self.check_events()
-            self.view.update()
+            self.camera.update()
             self.render()
 
 if __name__ == '__main__':

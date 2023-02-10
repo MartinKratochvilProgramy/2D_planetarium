@@ -3,7 +3,7 @@ import pygame as pg
 PAN_SPEED = 0.1
 ZOOM_SPEED = 0.05
 
-class View:
+class Camera:
     def __init__(self, app):
         self.app = app
         
@@ -50,8 +50,8 @@ class View:
 
                 x_post, y_post = self.screen_to_world_transform(self.mouse_x, self.mouse_y)
 
-                self.x_offset += (x_post - x_prev)
-                self.y_offset += (y_post - y_prev)
+                self.x_offset += (x_post - x_prev) * self.zoom
+                self.y_offset += (y_post - y_prev) * self.zoom
 
     def world_to_screen_transform(self, x_world, y_world):
         x_screen = (x_world - self.x_offset) / self.zoom
