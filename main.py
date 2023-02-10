@@ -26,6 +26,13 @@ class GraphicsEngine:
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                 pg.quit()
                 sys.exit()
+            elif event.type == pg.KEYDOWN:
+                if event.key == pg.K_a:
+                    # increase dt
+                    print("A")
+                if event.key == pg.K_d:
+                    # decrease dt
+                    print("D")
 
     def render(self):
         # clear framebuffer
