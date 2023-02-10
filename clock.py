@@ -5,8 +5,10 @@ class Clock:
         self.time_scale = time_scale
         self.time = t0
         self.dt = 0
+        self.dt_engine = 0
 
     def update_dt(self, dt):
+        self.dt_engine = dt
         self.dt = dt * self.time_scale
 
     def update_time(self):

@@ -11,7 +11,7 @@ class Body:
         self.orbit = orbit
 
     def update(self):
-        self.orbit.update(self.app.clock.dt)
+        self.orbit.update()
 
     def render(self):
         self.update()
@@ -37,8 +37,8 @@ class CircularOrbit():
         self.y = start_pos[1]
         self.fi = safe_atan(dy, dx)
 
-    def update(self, dt):
-        self.fi += self.angular_velocity * dt      # from ms to s, floor to 360
+    def update(self):
+        self.fi += self.angular_velocity * self.app.clock.dt      # from ms to s, floor to 360
         self.fi = self.fi % 360
         self.x = self.center[0] + self.radius * np.cos(self.fi)
         self.y = self.center[1] - self.radius * np.sin(self.fi)
@@ -65,11 +65,10 @@ class ElipticalOrbit():
         self.angular_velocity = angular_velocity
         self.color = color
         
-    def update(self, dt):
+    def update(self):
         v = np.sqrt(200 * (1/self.radius + self.epsilon))
         dfi = np.arcsin(v * self.app.clock.dt / self.radius)
         self.fi += dfi        # from ms to s, floor to 360
-        print(dfi, self.angular_velocity, self.app.clock.dt, self.radius)
         self.fi %= 360
         self.radius = self.p / (1 + self.epsilon * np.cos(self.fi))
         self.x = self.center[0] + self.radius * np.cos(self.fi)

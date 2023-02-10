@@ -29,3 +29,10 @@ class Info:
         top = zoom.get_height() + elapsed_time.get_height() + zoom.get_height() / 2
         zoom_rect.center = (left, top)
         self.app.screen.blit(zoom, zoom_rect)
+
+        fps = font.render(f'FPS: {round(1 / self.app.clock.dt_engine)}', True, WHITE, BLACK)
+        fps_rect = fps.get_rect()
+        left = 0 + fps.get_width() / 2
+        top = fps.get_height() + elapsed_time.get_height() + zoom.get_height() + fps.get_height() / 2
+        fps_rect.center = (left, top)
+        self.app.screen.blit(fps, fps_rect)
