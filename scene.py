@@ -1,11 +1,10 @@
+import math
 from model import *
 from colors import WHITE
-from settings import TIME_SCALE_SPEED
 
 class Scene:
-    def __init__(self, app, time_scale=1):
+    def __init__(self, app):
         self.app = app
-        self.time_scale = time_scale
         self.objects = []
         self.load()
 
@@ -24,7 +23,7 @@ class Scene:
                 app,
                 center=(0, 0), 
                 start_pos=(-150, 0), 
-                angular_velocity=0)
+                angular_velocity=2*np.pi)
                 )
             )
 
@@ -38,17 +37,11 @@ class Scene:
                 start_fi=0,
                 epsilon=0.9,
                 p = 150,
-                angular_velocity=100,
+                angular_velocity=6.28,
                 color=WHITE
                 )
             )
         )
-
-    def increase_time_scale(self):
-        self.time_scale *= 1 + TIME_SCALE_SPEED
-    
-    def decrease_time_scale(self):
-        self.time_scale *= 1 - TIME_SCALE_SPEED
     
     def render(self):
         for obj in self.objects:

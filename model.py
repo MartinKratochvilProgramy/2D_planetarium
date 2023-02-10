@@ -38,7 +38,9 @@ class CircularOrbit():
         self.fi = safe_atan(dy, dx)
 
     def update(self, dt):
-        self.fi += self.angular_velocity * dt / 1000 % 360       # from ms to s, floor to 360
+        self.fi += self.angular_velocity * dt      # from ms to s, floor to 360
+        self.fi = self.fi % 360
+        print(self.fi)
         self.x = self.center[0] + self.radius * np.cos(self.fi)
         self.y = self.center[1] - self.radius * np.sin(self.fi)
 

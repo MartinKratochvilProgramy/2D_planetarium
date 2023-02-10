@@ -1,12 +1,13 @@
 import pygame as pg
 from settings import ZOOM_SPEED
+from colors import WHITE, BLACK
 
 class Camera:
     def __init__(self, app):
         self.app = app
         
-        self.zoom = 1.
-        self.x_offset = -self.app.WIDTH / 2 * self.zoom
+        self.zoom = 1.5
+        self.x_offset = -self.app.WIDTH / 2 * self.zoom - 680
         self.y_offset = -self.app.HEIGHT / 2 * self.zoom
 
         self.x_start_pan = 0
