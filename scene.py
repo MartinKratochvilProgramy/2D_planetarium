@@ -37,7 +37,7 @@ class Scene:
                 start_fi=0,
                 epsilon=0.9,
                 p = 150,
-                angular_velocity=6.28,
+                angular_velocity=6000.28,
                 color=WHITE
                 )
             )

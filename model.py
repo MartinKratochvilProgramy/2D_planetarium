@@ -2,6 +2,7 @@ import pygame as pg
 import numpy as np
 from utils.safe_atan import safe_atan
 from colors import WHITE
+from settings import GRAV_CONST
 
 class Body:
     def __init__(self, app, radius, color, orbit):
@@ -64,9 +65,18 @@ class ElipticalOrbit():
         self.radius = p / (1 + epsilon)
         self.angular_velocity = angular_velocity
         self.color = color
+
+        self.r_max = self.p / (1 - self.epsilon)
+        self.r_min = self.p / (1 + self.epsilon)
+        self.b = np.sqrt(self.r_min * self.r_max)
+        self.a = self.b**2 / self.p
+
+        self.left = self.center[0] - self.r_max
+        self.top = self.center[1] - self.b
         
     def update(self):
-        v = np.sqrt(200 * (1/self.radius + self.epsilon))
+        v = (2 * self.angular_velocity) / (self.radius * np.sin(np.pi/2 + self.fi))
+        print(v, self.fi)
         dfi = np.arcsin(v * self.app.clock.dt / self.radius)
         self.fi += dfi        # from ms to s, floor to 360
         self.fi %= 360
@@ -75,16 +85,12 @@ class ElipticalOrbit():
         self.y = self.center[1] - self.radius * np.sin(self.fi)
 
     def render(self):
-        r_max = self.p / (1 - self.epsilon)
-        r_min = self.p / (1 + self.epsilon)
-        b = np.sqrt(r_min * r_max)
+        left = self.center[0] - self.r_max
+        top = self.center[1] - self.b
+        left, top = self.app.camera.world_to_screen_transform(self.left, self.top)
 
-        left = self.center[0] - r_max
-        top = self.center[1] - b
-        left, top = self.app.camera.world_to_screen_transform(left, top)
-
-        width = (r_min + r_max) / self.app.camera.zoom
-        height = 2*b / self.app.camera.zoom
+        width = (self.r_min + self.r_max) / self.app.camera.zoom
+        height = 2*self.b / self.app.camera.zoom
 
         pg.draw.ellipse(
             self.app.screen, 
