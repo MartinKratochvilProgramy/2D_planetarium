@@ -23,7 +23,7 @@ class Scene:
                 app,
                 center=(0, 0), 
                 start_pos=(-150, 0), 
-                angular_velocity=2*np.pi)
+                period=1)
                 )
             )
 

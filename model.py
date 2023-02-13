@@ -26,12 +26,12 @@ class Body:
 
 
 class CircularOrbit():
-    def __init__(self, app, center, start_pos, angular_velocity):
+    def __init__(self, app, center, start_pos, period):
         self.app = app
         dx = start_pos[0] - center[0]
         dy = start_pos[1] - center[1]
         self.radius = np.sqrt(dx**2 + dy**2)
-        self.angular_velocity = angular_velocity
+        self.angular_velocity = 2*np.pi / period
         self.center = center
         
         self.x = start_pos[0]
@@ -76,7 +76,6 @@ class ElipticalOrbit():
         
     def update(self):
         v = (2 * self.angular_velocity) / (self.radius * np.sin(np.pi/2 + self.fi))
-        print(v, self.fi)
         dfi = np.arcsin(v * self.app.clock.dt / self.radius)
         self.fi += dfi        # from ms to s, floor to 360
         self.fi %= 360
