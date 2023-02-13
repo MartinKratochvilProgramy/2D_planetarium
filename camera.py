@@ -6,7 +6,7 @@ class Camera:
     def __init__(self, app):
         self.app = app
         
-        self.zoom = 1.5
+        self.zoom = 800
         self.x_offset = -self.app.WIDTH / 2 * self.zoom - 680
         self.y_offset = -self.app.HEIGHT / 2 * self.zoom
 
@@ -49,8 +49,8 @@ class Camera:
 
                 x_post, y_post = self.screen_to_world_transform(self.mouse_x, self.mouse_y)
 
-                self.x_offset += (x_post - x_prev) * self.zoom
-                self.y_offset += (y_post - y_prev) * self.zoom
+                self.x_offset += (x_post - x_prev) * (self.zoom / 400)
+                self.y_offset += (y_post - y_prev) * (self.zoom / 400)
 
     def world_to_screen_transform(self, x_world, y_world):
         x_screen = (x_world - self.x_offset) / self.zoom

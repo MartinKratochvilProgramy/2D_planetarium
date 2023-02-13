@@ -16,7 +16,7 @@ class Info:
         time_scale_rect.center = (left, top)
         self.app.screen.blit(time_scale, time_scale_rect)
 
-        elapsed_time = font.render(f'Elapsed time: {round(self.app.clock.time)}s', True, WHITE, BLACK)
+        elapsed_time = font.render(f'Elapsed time: {round(self.app.clock.time)} days', True, WHITE, BLACK)
         elapsed_time_rect = elapsed_time.get_rect()
         left = 0 + elapsed_time.get_width() / 2
         top = time_scale.get_height() + elapsed_time.get_height() / 2
@@ -30,7 +30,7 @@ class Info:
         zoom_rect.center = (left, top)
         self.app.screen.blit(zoom, zoom_rect)
 
-        fps = font.render(f'FPS: {round(1 / self.app.clock.dt_engine)}', True, WHITE, BLACK)
+        fps = font.render(f'FPS: {round(1 / self.app.clock.dt_engine * self.app.clock.time_scale)}', True, WHITE, BLACK)
         fps_rect = fps.get_rect()
         left = 0 + fps.get_width() / 2
         top = fps.get_height() + elapsed_time.get_height() + zoom.get_height() + fps.get_height() / 2

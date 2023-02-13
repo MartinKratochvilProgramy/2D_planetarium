@@ -1,12 +1,13 @@
 import pygame as pg
 import numpy as np
 from utils.safe_atan import safe_atan
-from colors import WHITE
+from colors import *
 from settings import GRAV_CONST
 
 class Body:
-    def __init__(self, app, radius, color, orbit):
+    def __init__(self, app, name, radius, color, orbit):
         self.app = app
+        self.name = name
         self.radius = radius
         self.color = color
         self.orbit = orbit
@@ -23,6 +24,18 @@ class Body:
             center = (self.app.camera.world_to_screen_transform(self.orbit.x, self.orbit.y)),
             radius = max(self.radius / self.app.camera.zoom, 1)   # planet size could be less than 0
         )
+        self.draw_name()
+
+    def draw_name(self):
+        font = pg.font.Font('freesansbold.ttf', max(22, 200/self.app.camera.zoom))
+
+        planet_name = font.render(f'{self.name}', True, WHITE, BLACK)
+        planet_name_rect = planet_name.get_rect()
+        left, top = self.app.camera.world_to_screen_transform(self.orbit.x, self.orbit.y)
+        top += planet_name.get_width() / 2
+        left += planet_name.get_height() / 2
+        planet_name_rect.center = (left, top)
+        self.app.screen.blit(planet_name, planet_name_rect)
 
 
 class CircularOrbit():
